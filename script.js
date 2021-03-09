@@ -13,6 +13,7 @@ let lastResult = false;
 let empty = false;
 let reset = true
 let end = false;
+let lastPressed = false;
 
 function clear() {
     reset = true;
@@ -26,6 +27,8 @@ function clear() {
 
 
   function populateDisplay() {
+      this.classList.add("scale");
+      setTimeout(() => {this.classList.remove("scale")},100);
     if(this.classList.value.includes('number') && typeof(num2) == "number" && lastResult && !reset){
         reset = true
         clear()
@@ -125,8 +128,17 @@ function multiply (...args) {
         return display.textContent = divi;
         }
 
+    function handlePressedOpColor () {
+        if(lastPressed && this !== lastPressed) lastPressed.classList.remove('active');
+        this.classList.add("active")
+        lastPressed = this;
+    }
+
+operators.forEach(pressed => pressed.addEventListener('click', handlePressedOpColor));
+
 buttons.forEach(button => button.addEventListener('click', populateDisplay));
 AC.addEventListener('click', clear);
 equal.addEventListener('click', () => {
+    if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
     end = true;
     calculate()});
