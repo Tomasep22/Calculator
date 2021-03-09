@@ -62,7 +62,6 @@ button {
       justify-content: center;
       background-color: rgb(129, 129, 129);
   }
-    }
     button {
         height: 200px;
         width: 200px;
@@ -72,4 +71,4 @@ button {
         font-size: 100px;
         margin-left: 10px;
     }
-  }
+}
