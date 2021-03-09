@@ -10,6 +10,7 @@ let num1;
 let operator;
 let num2;
 let lastResult = false;
+let empty = false;
 
 function clear() {
     num1 = false;
@@ -30,10 +31,15 @@ function clear() {
         }
         num1 = Number(num1)
         operator = this.dataset.func;
-        display.textContent = "";
+        empty = false
+        
     }
     if(typeof(num1) == "number") {
         if(this.classList.value.includes('number') && operator) {
+            if(!empty) {
+                empty = !empty
+                display.textContent = "";
+            }
             display.textContent += this.textContent;
             num2 = display.textContent;
         }
