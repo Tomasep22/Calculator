@@ -11,8 +11,11 @@ let operator;
 let num2;
 let lastResult = false;
 let empty = false;
+let reset = true
+
 
 function clear() {
+    reset = true;
     num1 = false;
     num2 = false;
     operator = false;
@@ -20,7 +23,13 @@ function clear() {
     return display.textContent = "";
 }
 
+
+
   function populateDisplay() {
+    if(this.classList.value.includes('number') && typeof(num2) == "number" && lastResult && !reset){
+        reset = true
+        clear()
+    }
     if(this.classList.value.includes('number') && typeof(num1) !== "number") {
     display.textContent += this.textContent;
     num1 = display.textContent;
@@ -30,9 +39,14 @@ function clear() {
         num1 = lastResult;
         }
         num1 = Number(num1)
+    if(num1 && num2 && operator) {
+        calculate()
+        num1 = lastResult;
+    }
         operator = this.dataset.func;
+        reset = true;
         empty = false
-        
+
     }
     if(typeof(num1) == "number") {
         if(this.classList.value.includes('number') && operator) {
@@ -49,19 +63,28 @@ function clear() {
   function calculate() {
     if (operator == "add") {
         num2 = Number(num2)
+        reset = false
         add(num1, num2);
+ 
+
     }
     if(operator == "subtract") {
         num2 = Number(num2)
+        reset = false
         subtract(num1, num2);
+
     }
     if(operator == "multiply") {
         num2 = Number(num2)
+        reset = false
         multiply(num1, num2);
+
     }
     if(operator == "divide") {
         num2 = Number(num2)
+        reset = false
         divide(num1, num2);
+
     }
   }
  
