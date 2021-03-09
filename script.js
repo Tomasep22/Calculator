@@ -12,7 +12,7 @@ let num2;
 let lastResult = false;
 let empty = false;
 let reset = true
-
+let end = false;
 
 function clear() {
     reset = true;
@@ -39,13 +39,14 @@ function clear() {
         num1 = lastResult;
         }
         num1 = Number(num1)
-    if(num1 && num2 && operator) {
+    if(num1 && num2 && operator && !end) {
         calculate()
         num1 = lastResult;
     }
         operator = this.dataset.func;
         reset = true;
         empty = false
+        end = false;
 
     }
     if(typeof(num1) == "number") {
@@ -88,7 +89,6 @@ function clear() {
     }
   }
  
-
   function add (...args) {
     let sum = 0;
 	for (let i = 0; i < args.length; i++) {
@@ -125,18 +125,8 @@ function multiply (...args) {
         return display.textContent = divi;
         }
 
-
-
-  function power(...args) {
-	let exp = 0;
-	for (let i = 0; i < args.length - 1; i++) {
-		exp += (Number(args[i] ** Number(args[i+1])));
-		}
-		return exp;
-	}
-
-
-
 buttons.forEach(button => button.addEventListener('click', populateDisplay));
 AC.addEventListener('click', clear);
-equal.addEventListener('click', calculate);
+equal.addEventListener('click', () => {
+    end = true;
+    calculate()});
