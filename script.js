@@ -16,6 +16,7 @@ let end = false;
 let lastPressed = false;
 
 function clear() {
+    if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
     reset = true;
     num1 = false;
     num2 = false;
