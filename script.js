@@ -14,6 +14,7 @@ let empty = false;
 let reset = true
 let end = false;
 let lastPressed = false;
+display.textContent = [0];
 
 function clear() {
     if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
@@ -22,7 +23,7 @@ function clear() {
     num2 = false;
     operator = false;
     lastResult = false;
-    return display.textContent = "";
+    return display.textContent = [0];
 }
 
 
@@ -35,6 +36,7 @@ function clear() {
         clear()
     }
     if(this.classList.value.includes('number') && typeof(num1) !== "number") {
+    if(display.textContent == [0] || display.textContent == "0") display.textContent = "";    
     display.textContent += this.textContent;
     num1 = display.textContent;
     }
@@ -59,6 +61,7 @@ function clear() {
                 empty = !empty
                 display.textContent = "";
             }
+            if(display.textContent == [0] || display.textContent == "0") display.textContent = "";
             display.textContent += this.textContent;
             num2 = display.textContent;
         }
@@ -142,4 +145,6 @@ AC.addEventListener('click', clear);
 equal.addEventListener('click', () => {
     if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
     end = true;
-    calculate()});
+    calculate()
+    num1 = lastResult;
+});
