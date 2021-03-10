@@ -5,6 +5,7 @@ const display = calculator.querySelector('.display');
 const numbers = calculator.querySelectorAll('.number');
 const AC = calculator.querySelector('.clear');
 const equal = calculator.querySelector('.assigment');
+const dot = calculator.querySelector('.dot');
 
 let num1;
 let operator;
@@ -14,6 +15,7 @@ let empty = false;
 let reset = true
 let end = false;
 let lastPressed = false;
+let noDot = true;
 display.textContent = [0];
 
 function clear() {
@@ -24,6 +26,7 @@ function clear() {
     operator = false;
     lastResult = false;
     lastPressed = false
+    noDot = true;
     return display.textContent = [0];
 }
 
@@ -125,6 +128,10 @@ function multiply (...args) {
     }
 
     function divide (...args) {
+        if (args[1] == 0) {
+            lastResult = "ERROR"
+            return display.textContent = "ERROR"
+        } else {
         let divi = 0;
         for (let i = 0; i < args.length - 1; i++) {
             divi += (Number(args[i] / Number(args[i+1])));
@@ -132,12 +139,23 @@ function multiply (...args) {
                 lastResult = divi;
         return display.textContent = divi;
         }
+    }
 
     function handlePressedOpColor () {
         if(lastPressed && this !== lastPressed) lastPressed.classList.remove('active');
         this.classList.add("active")
         lastPressed = this;
     }
+
+
+dot.addEventListener('click', () => {
+    if(!display.textContent.includes('.')) {
+        display.textContent += '.';
+        noDot = false;
+    } else {
+        return;
+    }
+});
 
 operators.forEach(pressed => pressed.addEventListener('click', handlePressedOpColor));
 
