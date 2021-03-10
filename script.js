@@ -6,6 +6,7 @@ const numbers = calculator.querySelectorAll('.number');
 const AC = calculator.querySelector('.clear');
 const equal = calculator.querySelector('.assigment');
 const dot = calculator.querySelector('.dot');
+const del = calculator.querySelector('.delete');
 
 let num1;
 let operator;
@@ -156,6 +157,22 @@ dot.addEventListener('click', () => {
         return;
     }
 });
+
+del.addEventListener('click', () => {
+    const str = String(display.textContent);
+    console.log(str);
+    const arr = str.split("")
+    console.log(arr);
+    const newArr = arr.pop();
+    console.log(newArr);
+    console.log(arr + " arr")
+    let newStr = arr.join("");
+    console.log(newStr)
+    if(newStr == '') {
+        newStr = '0'
+    }
+    return display.textContent = newStr;
+})
 
 operators.forEach(pressed => pressed.addEventListener('click', handlePressedOpColor));
 
