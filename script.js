@@ -143,6 +143,10 @@ operators.forEach(pressed => pressed.addEventListener('click', handlePressedOpCo
 buttons.forEach(button => button.addEventListener('click', populateDisplay));
 AC.addEventListener('click', clear);
 equal.addEventListener('click', () => {
+    if(!num2 || (!operator && num2)) {
+        clear();
+        return;
+    }
     if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
     end = true;
     calculate()
