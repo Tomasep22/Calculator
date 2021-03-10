@@ -23,6 +23,7 @@ function clear() {
     num2 = false;
     operator = false;
     lastResult = false;
+    lastPressed = false
     return display.textContent = [0];
 }
 
