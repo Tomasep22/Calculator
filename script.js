@@ -51,6 +51,7 @@ function clear() {
         }
         num1 = Number(num1)
     if(num1 && num2 && operator && !end) {
+
         calculate()
         num1 = lastResult;
     }
@@ -159,17 +160,20 @@ dot.addEventListener('click', () => {
 });
 
 del.addEventListener('click', () => {
+    if(num1 === lastResult && typeof(num2) === 'number') return;
     const str = String(display.textContent);
-    console.log(str);
     const arr = str.split("")
-    console.log(arr);
     const newArr = arr.pop();
-    console.log(newArr);
-    console.log(arr + " arr")
     let newStr = arr.join("");
-    console.log(newStr)
+
     if(newStr == '') {
         newStr = '0'
+    }
+    if(str == num1 && typeof(num1 == "string")) {
+    num1 = newStr
+    }
+    if(str == num2 && typeof(num2 == "string")) {
+    num2 = newStr
     }
     return display.textContent = newStr;
 })
