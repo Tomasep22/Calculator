@@ -17,6 +17,7 @@ let reset = true
 let end = false;
 let lastPressed = false;
 let noDot = true;
+let lastButtonAll;
 display.textContent = [0];
 
 function clear() {
@@ -28,12 +29,18 @@ function clear() {
     lastResult = false;
     lastPressed = false
     noDot = true;
+
     return display.textContent = [0];
 }
 
 
 
   function populateDisplay() {
+    if (lastButtonAll && lastButtonAll.classList.value.includes("operator") && this.classList.value.includes('operator') && this !== lastButtonAll) {
+        operator = this.dataset.func
+         return;
+    }
+      lastButtonAll = this;
       this.classList.add("scale");
       setTimeout(() => {this.classList.remove("scale")},100);
     if(this.classList.value.includes('number') && typeof(num2) == "number" && lastResult && !reset){
@@ -107,6 +114,9 @@ function clear() {
 	for (let i = 0; i < args.length; i++) {
 		sum += Number(args[i]);
 	}
+    if(!Number.isInteger(sum)) {
+    sum = sum.toFixed(2);
+    }
     lastResult = sum;
 	return display.textContent = sum;
 	}
@@ -116,6 +126,9 @@ function clear() {
 	for (let i = 0; i < args.length - 1; i++) {
 		sub += (Number(args[i] - Number(args[i+1])));
 	    }
+        if(!Number.isInteger(sub)) {
+           sub = sub.toFixed(2);
+            }
         lastResult = sub;
 	return display.textContent = sub;
 	}
@@ -125,6 +138,9 @@ function multiply (...args) {
     for (let i = 0; i < args.length - 1; i++) {
         multi += (Number(args[i] * Number(args[i+1])));
         }
+        if(!Number.isInteger(multi)) {
+            multi = multi.toFixed(2);
+            }
             lastResult = multi;
     return display.textContent = multi;
     }
@@ -138,6 +154,9 @@ function multiply (...args) {
         for (let i = 0; i < args.length - 1; i++) {
             divi += (Number(args[i] / Number(args[i+1])));
             }
+        if(!Number.isInteger(divi)) {
+         divi = divi.toFixed(2);
+        }
                 lastResult = divi;
         return display.textContent = divi;
         }
@@ -182,9 +201,10 @@ operators.forEach(pressed => pressed.addEventListener('click', handlePressedOpCo
 
 buttons.forEach(button => button.addEventListener('click', populateDisplay));
 AC.addEventListener('click', clear);
+
 equal.addEventListener('click', () => {
     if(!num2 || (!operator && num2)) {
-        clear();
+        // clear(); if = button brakes maybe is fix by adding this
         return;
     }
     if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
