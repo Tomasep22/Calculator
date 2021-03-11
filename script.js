@@ -35,24 +35,28 @@ function clear() {
 
 
 
-  function populateDisplay() {
-    if (lastButtonAll && lastButtonAll.classList.value.includes("operator") && this.classList.value.includes('operator') && this !== lastButtonAll) {
-        operator = this.dataset.func
+  function populateDisplay(key) {
+      let currentButton = this;
+    if(this == window) {
+        currentButton = key;
+    }
+    if (lastButtonAll && lastButtonAll.classList.value.includes("operator") && currentButton.classList.value.includes('operator') && currentButton !== lastButtonAll) {
+        operator = currentButton.dataset.func
          return;
     }
-      lastButtonAll = this;
-      this.classList.add("scale");
-      setTimeout(() => {this.classList.remove("scale")},100);
-    if(this.classList.value.includes('number') && typeof(num2) == "number" && lastResult && !reset){
+      lastButtonAll = currentButton;
+      currentButton.classList.add("scale");
+      setTimeout(() => {currentButton.classList.remove("scale")},100);
+    if(currentButton.classList.value.includes('number') && typeof(num2) == "number" && lastResult && !reset){
         reset = true
         clear()
     }
-    if(this.classList.value.includes('number') && typeof(num1) !== "number") {
+    if(currentButton.classList.value.includes('number') && typeof(num1) !== "number") {
     if(display.textContent == [0] || display.textContent == "0") display.textContent = "";    
-    display.textContent += this.textContent;
+    display.textContent += currentButton.textContent;
     num1 = display.textContent;
     }
-    if(this.classList.value.includes('operator')) {
+    if(currentButton.classList.value.includes('operator')) {
         if(lastResult) {
         num1 = lastResult;
         }
@@ -62,20 +66,20 @@ function clear() {
         calculate()
         num1 = lastResult;
     }
-        operator = this.dataset.func;
+        operator = currentButton.dataset.func;
         reset = true;
         empty = false
         end = false;
 
     }
     if(typeof(num1) == "number") {
-        if(this.classList.value.includes('number') && operator) {
+        if(currentButton.classList.value.includes('number') && operator) {
             if(!empty) {
                 empty = !empty
                 display.textContent = "";
             }
             if(display.textContent == [0] || display.textContent == "0") display.textContent = "";
-            display.textContent += this.textContent;
+            display.textContent += currentButton.textContent;
             num2 = display.textContent;
         }
     }
@@ -162,23 +166,35 @@ function multiply (...args) {
         }
     }
 
-    function handlePressedOpColor () {
-        if(lastPressed && this !== lastPressed) lastPressed.classList.remove('active');
-        this.classList.add("active")
-        lastPressed = this;
+    function handlePressedOpColor (key) {
+        let pressedOp = this
+        if (pressedOp == window) pressedOp = key
+        if(lastPressed && pressedOp !== lastPressed) lastPressed.classList.remove('active');
+        pressedOp.classList.add("active")
+        lastPressed = pressedOp;
     }
 
 
-dot.addEventListener('click', () => {
+function equalButton() {
+    if(!num2 || (!operator && num2)) {
+        return;
+    }
+    if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
+    end = true;
+    calculate()
+    num1 = lastResult;
+}
+
+function dotButton() {
     if(!display.textContent.includes('.')) {
         display.textContent += '.';
         noDot = false;
     } else {
         return;
     }
-});
+}
 
-del.addEventListener('click', () => {
+function delButton() {
     if(num1 === lastResult && typeof(num2) === 'number') return;
     const str = String(display.textContent);
     const arr = str.split("")
@@ -195,20 +211,32 @@ del.addEventListener('click', () => {
     num2 = newStr
     }
     return display.textContent = newStr;
-})
+}
+
+function keyboardComp(e) {
+    const key = calculator.querySelector(`button[data-key="${e.keyCode}"]`);
+    if (key == equal) equalButton()
+    if (key == dot) dotButton()
+    if(key == del) delButton()
+    if(key == AC) clear()
+    if(key.classList.value.includes('operator')) handlePressedOpColor(key)
+    if (!key) return;
+    populateDisplay(key);    
+}
+
+
+dot.addEventListener('click', dotButton)
+
+del.addEventListener('click', delButton)
 
 operators.forEach(pressed => pressed.addEventListener('click', handlePressedOpColor));
 
 buttons.forEach(button => button.addEventListener('click', populateDisplay));
 AC.addEventListener('click', clear);
 
-equal.addEventListener('click', () => {
-    if(!num2 || (!operator && num2)) {
-        // clear(); if = button brakes maybe is fix by adding this
-        return;
-    }
-    if(lastPressed && lastPressed.classList.value.includes('active')) lastPressed.classList.remove('active');
-    end = true;
-    calculate()
-    num1 = lastResult;
-});
+
+equal.addEventListener('click', equalButton);
+
+
+window.addEventListener('keydown', keyboardComp);
+
