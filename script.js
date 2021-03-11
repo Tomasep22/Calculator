@@ -119,7 +119,7 @@ function clear() {
 		sum += Number(args[i]);
 	}
     if(!Number.isInteger(sum)) {
-    sum = sum.toFixed(2);
+    sum = Number(sum.toFixed(2));
     }
     lastResult = sum;
 	return display.textContent = sum;
@@ -131,7 +131,7 @@ function clear() {
 		sub += (Number(args[i] - Number(args[i+1])));
 	    }
         if(!Number.isInteger(sub)) {
-           sub = sub.toFixed(2);
+           sub = Number(sub.toFixed(2));
             }
         lastResult = sub;
 	return display.textContent = sub;
@@ -143,7 +143,7 @@ function multiply (...args) {
         multi += (Number(args[i] * Number(args[i+1])));
         }
         if(!Number.isInteger(multi)) {
-            multi = multi.toFixed(2);
+            multi = Number(multi.toFixed(2));
             }
             lastResult = multi;
     return display.textContent = multi;
@@ -159,7 +159,7 @@ function multiply (...args) {
             divi += (Number(args[i] / Number(args[i+1])));
             }
         if(!Number.isInteger(divi)) {
-         divi = divi.toFixed(2);
+         divi = Number(divi.toFixed(2));
         }
                 lastResult = divi;
         return display.textContent = divi;
