@@ -75,18 +75,30 @@ button {
 }
 
 
-
-@media (max-width: 1020px) {
+ 
+@media (max-width: 1000px) {
 
 
     .display {
-        width: 98%;
+         width: 96%; 
         padding: 4px;
-        height: 98%;
+         height: 96%; 
         opacity: 0.8;
         font-size: 145px;
         font-family: 'Courier New', Courier, monospace;
+
         
+    }
+    .zero {
+        width: 100%;
+        border-bottom-left-radius: 60px;
+        border-top-left-radius: 15px
+    }
+
+    .assigment {
+        width: 100%;
+        border-bottom-right-radius: 60px;
+        border-top-right-radius: 15px
     }
 
 
@@ -98,5 +110,5 @@ button {
 
   }
 
-}
+} 
 
