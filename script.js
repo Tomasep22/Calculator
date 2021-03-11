@@ -214,7 +214,7 @@ function delButton() {
 }
 
 function keyboardComp(e) {
-    const key = calculator.querySelector(`button[data-key="${e.keyCode}"]`);
+    const key = calculator.querySelector(`button[data-key="${e.key}"]`);
     if (key == equal) equalButton()
     if (key == dot) dotButton()
     if(key == del) delButton()
