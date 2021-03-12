@@ -7,7 +7,7 @@ body {
 
 .container {
     margin: 0 auto;
-    width: 21vw;
+    width: 18vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
@@ -30,17 +30,16 @@ body {
 .display {
     grid-column: span 4;
     display: flex;
-    border: 3px solid black;
-    width: 91%;
-    padding: 4px;
-    height: 80%;
+    width: 100%;
+    height: 78%;
     background: rgb(0, 0, 0);
     color: white;
     align-items: center;
-    margin-left: 7px;
     font-size: 2em;
     font-family: 'Courier New', Courier, monospace;
-    border-radius: 5%;
+    justify-content:flex-end;
+    border-bottom: 7px double rgba(255, 255, 255, 0.219);
+    font-family: 'DotGothic16', sans-serif;
 
 
     
@@ -49,10 +48,12 @@ body {
 
 .assigment {
     grid-column: span 2;
+
 }
 
 .zero {
     grid-column: span 2;
+
 }
 
 button {
