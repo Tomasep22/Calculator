@@ -60,13 +60,18 @@ function clear() {
         if(lastResult) {
         num1 = lastResult;
         }
-        num1 = Number(num1)
-    if(num1 && num2 && operator && !end) {
+        if(num1 === false) {
+            console.log("num1 = display")
+            num1 = Number(display.textContent);
+        }
+
+    if(num1 !== false && num2 && operator && !end) {
 
         calculate()
         num1 = lastResult;
     }
         operator = currentButton.dataset.func;
+        num1 = Number(display.textContent);
         reset = true;
         empty = false
         end = false;
@@ -215,12 +220,12 @@ function delButton() {
 
 function keyboardComp(e) {
     const key = calculator.querySelector(`button[data-key="${e.key}"]`);
+    if (!key) return;
     if (key == equal) equalButton()
     if (key == dot) dotButton()
     if(key == del) delButton()
     if(key == AC) clear()
     if(key.classList.value.includes('operator')) handlePressedOpColor(key)
-    if (!key) return;
     populateDisplay(key);    
 }
 
